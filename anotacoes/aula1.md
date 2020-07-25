@@ -110,7 +110,7 @@ Podemos teclar ENTER para todas as perguntas. No final, teremos o arquivo `./pac
 npm install typescript@2.3.2 --save-dev
 ```
 
-Dentro de instantes ele será instalado dentro da pasta alurabank/node_modules.
+Dentro de instantes ele será instalado dentro da pasta ./node_modules.
 O instalador adiciona esta informação no `package.json` na chave `"devDependencies": {}`
 
 #### O arquivo tsconfig.json
@@ -134,7 +134,7 @@ O parâmetro **`noEmitOnError = true `** não é obrigatório, mas ele evita ger
 
 #### Script para o compilador
 
-Uma boa prática é criarmos um script em nosso `package.json` que se encarregará de chamr o compilador para nós através do terminal.
+Uma boa prática é criarmos um script em nosso `package.json` que se encarregará de chamar o compilador para nós através do terminal.
 Para isso, precisamos adicionar dentro da chave `scripts`, uma chamada para o **`tsc`**. Podemos nomear esta chamada de **`compile`**, por exemplo:
 
 ```json
@@ -243,7 +243,31 @@ Porém, no `HTML` ainda mantemos a importação para os arquivos **`.js`** que s
 ---
 ## Automatizando o processo de Compilação
 
+Podemos automatizar o processo de compilação que será disparado toda vez que um arquivo .ts for modificado. Para isso, vamos adicionar mais um script em `./package.json`, o script `"start": "tsc -w"`:
 
+```json
+{
+  "name": "alurabank",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile": "tsc",
+    "start": "tsc -w"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^2.3.2"
+  }
+}
+```
 
+Agora, no terminal e dentro da pasta do projeto, vamos executar o comando:
 
+```sh
+npm start
+```
 
+O terminal ficará travado pois o serviço de monitoramento de arquivos do TypeScript terá entrado em ação. Experimente alterar os arquivos `.ts` e veja o resultado. Só não esqueça de recarregar seu navegador para que as mudanças dos últimos arquivos `.js` gerados sejam carregadas.
