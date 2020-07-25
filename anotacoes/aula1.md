@@ -36,6 +36,10 @@ class Negociacao {
         return this._valor
     }
 
+    get volume() {
+
+        return this._quantidade * this._valor;
+    }
 }
 ```
 
@@ -111,19 +115,22 @@ O instalador adiciona esta informação no `package.json` na chave `"devDependen
 
 #### O arquivo tsconfig.json
 
-Precisamos criar o arquivo `./tsconfig.json` que guardará as configurações do nosso compilador. Configuração mínima:
+Precisamos criar o arquivo `./tsconfig.json` que guardará as configurações do nosso compilador:
 
 ```json
 {
-    "compilerOptions": {    // configurações do compilador:
-        "target": "es6",    //  codigo será compilado em **`es6`**
-        "outDir": "app/js"  //  diretório de saida do compilador
+    "compilerOptions": {        // configurações do compilador:
+        "target": "es6",        //  codigo será compilado em **`es6`**
+        "outDir": "app/js",     //  diretório de saida do compilador
+        "noEmitOnError": true   //  Não gera arquivo .js caso tenha erros na compilação.
     },
-    "include": [            // fonte dos arquivos a serem compilados.
+    "include": [                // fonte dos arquivos a serem compilados.
         "app/ts/**/*"         
     ]
 }
 ```
+
+O parâmetro **`noEmitOnError = true `** não é obrigatório, mas ele evita gerar arquivos js a partir de códigos typescript inconsistentes, o que poderia gerar comportamentos não desejados durante a execução.
 
 #### Script para o compilador
 
@@ -161,10 +168,77 @@ Os código dentro dos diretórios definidos no arquivo `tsconfig.json` serão co
 ---
 ## Modelando com TypeScript
 
+Vamos criar o script que declarará nossa classe `Negociacao` agora em type script no arquivo `app/ts/models/Negociacao.ts`.
 
+Precisamos agora declarar os parâmetros da classe antes do *constructor*:
 
+```ts
+class Negociacao {
 
+    _data;
+    _quantidade;
+    _valor;
 
+    constructor(data, quantidade, valor) {
+        this._data = data
+        this._quantidade = quantidade
+        this._valor = valor
+
+    }
+
+    get data() {
+        return this._data
+    }
+
+    get quantidade() {
+        return this._quantidade
+    }
+
+    get valor() {
+        return this._valor
+    }
+
+    get volume() {
+        return this._quantidade * this._valor;
+    }
+}
+```
+
+Podemos ainda declarar as propriedades como privada, utilizando o modificador `private`:
+
+```ts
+class Negociacao {
+
+    private _data;
+    private _quantidade;
+    private _valor;
+
+    constructor(data, quantidade, valor) {
+        this._data = data
+        this._quantidade = quantidade
+        this._valor = valor
+
+    }
+
+    get data() {
+        return this._data
+    }
+
+    get quantidade() {
+        return this._quantidade
+    }
+
+    get valor() {
+        return this._valor
+    }
+
+    get volume() {
+        return this._quantidade * this._valor;
+    }
+}
+```
+
+Porém, no `HTML` ainda mantemos a importação para os arquivos **`.js`** que seão gerados. O navegador sempre trabalha com o javaScript.
 
 ---
 ## Automatizando o processo de Compilação

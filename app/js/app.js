@@ -1,2 +1,2 @@
 let negociacao = new Negociacao(new Date(), 2, 100);
-console.log('negociacap :>> ', negociacao);
+console.log('negociacao :>> ', negociacao);
