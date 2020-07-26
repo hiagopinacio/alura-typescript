@@ -167,20 +167,99 @@ nome.replace('/vio/', 'vião'); // faz auto-boxing
 
 Dessa forma, TypeScript permite distinguir entre o tipo literal e o tipo objeto. Contudo, **a boa prática é usarmos os tipos literais `number` e `string`**, porque em JavaScript `new String()` e `new Number()` são raramente usados.
 
-
----
-## Um problema não esperado
-
-
 ---
 ## Casting explícito
 
+Nossos inputs do formulário são do tipo HTMLInputElement. Assim, podemos definir os parâmetros do controller:
+
+```ts
+// app/ts/controllers/NegociacaoController.ts
+
+class NegociacaoController {
+
+    private _inputData: HTMLInputElement;
+    private _inputQuantidade: HTMLInputElement;
+    private _inputValor: HTMLInputElement;
+
+       // código posterior omitido
+```
+
+Porém, ao atribuir os valores destes parâmetros, a função `document.querySelector()` retorna elementos do tipo `Element`, um tipo mais genérico, pois seu retorno pode ser elementos que representam inputs, tabelas, destaques entre outros.
+
+Como estes elementos são do tipo input, realizamos uma conversão explícita:
+
+```ts
+// app/ts/controllers/NegociacaoController.ts
+
+// código anterior omitido -->
+
+    constructor() {
+
+        this._inputData = <HTMLInputElement>document.querySelector('#data');
+        this._inputQuantidade = <HTMLInputElement>document.querySelector('#quantidade');
+        this._inputValor = <HTMLInputElement>document.querySelector('#valor');
+    }
+
+```
+
+Também é necessário tipar o parâmetro event do método adiciona(). No caso, utilizaremos o tipo Event:
+
+```ts
+// app/ts/controllers/NegociacaoController.ts
+// código anterior omitido 
+
+    adiciona(event: Event) {
+
+        event.preventDefault()
+
+        const negociacao = new Negociacao(
+            this._inputData.value,
+            this._inputQuantidade.value,
+            this._inputValor.value
+        )
+
+        console.log('negociacao :>> ', negociacao);
+    }
+```
+
+Porém agora o compilador retorna um erro, pois a propriedade `value` de um `HTMLInputElement` é do tipo string. Precisamos converter os dados antes que sejam passados para o constructor() da classe `Negociação` de acordo com os tipos esperados por ela.
 
 ---
 ## Adequando valores aos tipos
+ 
+ Podemos criar uma instancia de Date passando uma string no formato `"aaaa,dd,mm"`. Ao pegar a propriedade value de um input do tipo date, recebemos uma string no formato `aaaa-dd-mm`. Basta usar o método replace na string recebida passando uma espressão regular para substiur `-` por `,`:
 
+```ts
+ String.replace("/-/g", ",")
+```
 
----
-## Para saber mais: input type Date no microssoft Edge e no Firefox
+Para transformar string para o tipo inteiro:
+```ts
+parseInt()
+```
 
-  
+Finalmente, para transformar string para o tipo `float`:
+```ts
+parseFloat()
+```
+
+Desta forma, nosso método adiciona fica:
+
+```ts
+// app/ts/controllers/NegociacaoController.ts
+// código anterior omitido 
+
+    adiciona(event: Event) {
+
+        event.preventDefault()
+
+        const negociacao = new Negociacao(
+            new Date(this._inputData.value.replace("/-/g", ",")),
+            parseInt(this._inputQuantidade.value),
+            parseFloat(this._inputValor.value)
+        )
+
+        console.log('negociacao :>> ', negociacao);
+    }
+
+```

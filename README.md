@@ -37,8 +37,6 @@ O compilador do TypeScript precisa da plataforma Node.js instalada para poder fu
 - O tipo implícito any
 - Tipando explicitamente
 - Para saber mais: string vs String e number vs Number
-- Um problema não esperado
 - Casting explícito
 - Adequando valores aos tipos
-- Para saber mais: input type Date no microssoft Edge e no Firefox
   
