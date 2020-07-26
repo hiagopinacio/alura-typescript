@@ -31,3 +31,14 @@ O compilador do TypeScript precisa da plataforma Node.js instalada para poder fu
 - Modelando com TypeScript
 - Automatizando o processo de Compilação
 
+
+**[2 - Benefícios da tipagem estática](./anotacoes/aula2.md)**
+- Capturando os dados do formulário
+- O tipo implícito any
+- Tipando explicitamente
+- Para saber mais: string vs String e number vs Number
+- Um problema não esperado
+- Casting explícito
+- Adequando valores aos tipos
+- Para saber mais: input type Date no microssoft Edge e no Firefox
+  
