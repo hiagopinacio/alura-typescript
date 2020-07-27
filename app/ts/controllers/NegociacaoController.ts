@@ -3,6 +3,8 @@ class NegociacaoController {
     private _inputData: HTMLInputElement
     private _inputQuantidade: HTMLInputElement
     private _inputValor: HTMLInputElement
+    private _negociacoes = new Negociacoes()
+    private _negociacoesView = new NegociacoesView("#tabela-negociacoes")
 
     constructor() {
         let $ = document.querySelector.bind(document)
@@ -22,6 +24,10 @@ class NegociacaoController {
             parseFloat(this._inputValor.value)
         )
 
-        console.log('negociacao :>> ', negociacao);
+        this._negociacoes.adiciona(negociacao)
+
+        this._negociacoesView.update(this._negociacoes)
+
+        console.log('negociacoes :>> ', this._negociacoes);
     }
 }

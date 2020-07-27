@@ -21,4 +21,8 @@ class Negociacao {
     get volume() {
         return this._quantidade * this._valor;
     }
+
+    get reprData() {
+        return [this.data.getUTCDate(), this.data.getUTCMonth() + 1, this.data.getUTCFullYear()].join('/')
+    }
 }
