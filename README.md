@@ -45,3 +45,9 @@ O compilador do TypeScript precisa da plataforma Node.js instalada para poder fu
 - Guardando negociações
 - Apresentando o modelo para o usuário
 - Template dinâmico
+
+**[4 -  Herança, reaproveitamento de código ](./anotacoes/aula4.md)**
+- Herança
+- Lidando com tipos Genéricos
+- Criando outra View
+- Classes Abstratas
