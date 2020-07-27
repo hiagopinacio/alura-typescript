@@ -40,3 +40,8 @@ O compilador do TypeScript precisa da plataforma Node.js instalada para poder fu
 - Casting explícito
 - Adequando valores aos tipos
   
+**[3 - Elaborando uma solução de view](./anotacoes/aula3.md)**
+- Criando mais um modelo
+- Guardando negociações
+- Apresentando o modelo para o usuário
+- Template dinâmico
