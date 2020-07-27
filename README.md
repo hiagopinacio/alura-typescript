@@ -51,3 +51,8 @@ O compilador do TypeScript precisa da plataforma Node.js instalada para poder fu
 - Lidando com tipos Genéricos
 - Criando outra View
 - Classes Abstratas
+
+**[5 -  TypeScript definitions ](./anotacoes/aula5.md)**
+- JQuery, tem espaço?
+- Instalando TypeScript Definitions
+- Extirpando os comentários do processo de compilação

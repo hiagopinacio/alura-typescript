@@ -1,10 +1,4 @@
-class NegociacoesView {
-    constructor(selector) {
-        this._element = document.querySelector(selector);
-    }
-    update(negociacoes) {
-        this._element.innerHTML = this.template(negociacoes);
-    }
+class NegociacoesView extends View {
     template(negociacoes) {
         const tbody = negociacoes.toArray().map(negociacao => `
         <tr>

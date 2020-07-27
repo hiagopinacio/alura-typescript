@@ -1,28 +1,20 @@
 class NegociacaoController {
 
-    private _inputData: HTMLInputElement
-    private _inputQuantidade: HTMLInputElement
-    private _inputValor: HTMLInputElement
+    private _inputData = $('#data')
+    private _inputQuantidade = $('#quantidade')
+    private _inputValor = $('#valor')
     private _negociacoes = new Negociacoes()
     private _negociacoesView = new NegociacoesView("#tabela-negociacoes")
     private _mensagemView = new MensagemView('#mensagemView')
-
-    constructor() {
-        let $ = document.querySelector.bind(document)
-        this._inputData = <HTMLInputElement>$('#data')
-        this._inputQuantidade = <HTMLInputElement>$('#quantidade')
-        this._inputValor = <HTMLInputElement>$('#valor')
-
-    }
 
     adiciona(event: Event) {
 
         event.preventDefault()
 
         const negociacao = new Negociacao(
-            new Date(this._inputData.value.replace("/-/g", ",")),
-            parseInt(this._inputQuantidade.value),
-            parseFloat(this._inputValor.value)
+            new Date(this._inputData.val().replace("/-/g", ",")),
+            parseInt(this._inputQuantidade.val()),
+            parseFloat(this._inputValor.val())
         )
 
         this._negociacoes.adiciona(negociacao)
