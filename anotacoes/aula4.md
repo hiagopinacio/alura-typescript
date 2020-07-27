@@ -154,7 +154,52 @@ Criamos uma tag no template e importamos os scripts:
 ```
 Agora basta criar uma instancia dela no *controller* , e chamar o método update:
 
-
-
 ---
 ## 4.1 Classes Abstratas
+
+A nossa classe `View`, não tem um template implementado, por isso ela nunca deve ser instanciada:
+
+```ts
+const view = new View<string>() //não deve acontecer!!
+```
+
+Por isso, devemos torna-la abstrada, e o typeScript permite declararmos isso com o modificador `abstract`:
+
+```ts
+// app/ts/views/View.ts
+abstract class View<T> {
+
+    // restante do código omitido ...
+}
+```
+
+Assim, conseguimos se tentarmos instancia-la pegamos o erro em tempo de compilação!
+
+Outro erro que estamos pegando apenas em tempo de execução é a não implementação do método template. Em vez de lançar um erro ao ser executado por uma classe filha que não o sobrescreveu, podemos defini-lo como um método abstrato:
+
+```ts
+abstract template(model: T): string;
+```
+
+ Com isso passamos a pegar este erro também, em tempo de compilação. A classe View fica:
+
+```ts
+// app/ts/views/View.ts
+abstract class View<T> {
+
+    private _element: Element
+
+    constructor(selector: string) {
+
+        this._element = document.querySelector(selector)
+    }
+
+    update(model: T) {
+        this._element.innerHTML = this.template(model)
+    }
+
+    abstract template(model: T): string;
+}
+```
+
+
