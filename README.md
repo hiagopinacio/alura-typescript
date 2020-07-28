@@ -23,7 +23,9 @@ O compilador do TypeScript precisa da plataforma Node.js instalada para poder fu
 
 # Aulas
 
-**[1 - Bem começado, metade feito](./anotacoes/aula1.md)**
+## Parte 1: Evoluindo seu JavaScript
+
+**[1 - Bem começado, metade feito](./anotacoes/parte1_aula1.md)**
 - O projeto e sua Estrutura
 - Modelando uma Negociação
 - Colocando o código a prova
@@ -32,7 +34,7 @@ O compilador do TypeScript precisa da plataforma Node.js instalada para poder fu
 - Automatizando o processo de Compilação
 
 
-**[2 - Benefícios da tipagem estática](./anotacoes/aula2.md)**
+**[2 - Benefícios da tipagem estática](./anotacoes/parte1_aula2.md)**
 - Capturando os dados do formulário
 - O tipo implícito any
 - Tipando explicitamente
@@ -40,19 +42,93 @@ O compilador do TypeScript precisa da plataforma Node.js instalada para poder fu
 - Casting explícito
 - Adequando valores aos tipos
   
-**[3 - Elaborando uma solução de view](./anotacoes/aula3.md)**
+**[3 - Elaborando uma solução de view](./anotacoes/parte1_aula3.md)**
 - Criando mais um modelo
 - Guardando negociações
 - Apresentando o modelo para o usuário
 - Template dinâmico
 
-**[4 -  Herança, reaproveitamento de código ](./anotacoes/aula4.md)**
+**[4 -  Herança, reaproveitamento de código ](./anotacoes/parte1_aula4.md)**
 - Herança
 - Lidando com tipos Genéricos
 - Criando outra View
 - Classes Abstratas
 
-**[5 -  TypeScript definitions ](./anotacoes/aula5.md)**
+**[5 -  TypeScript definitions ](./anotacoes/parte1_aula5.md)**
 - JQuery, tem espaço?
 - Instalando TypeScript Definitions
 - Extirpando os comentários do processo de compilação
+
+## Parte2: Mais Técnicas e Boas Práticas
+
+**[1 -  NameSpace e módulos externos ](./anotacoes/parte2_aula1.md)**
+
+- Organização do código através de namespaces
+- De namespaces para ES2015 modules
+- O papel de um carregador de módulos
+- Servidor local
+- Organizando módulos em barris
+
+**[2 - Lapidando nosso código](./anotacoes/parte2_aula2.md)**
+
+- Propriedades readonly
+- Sobre design de classe
+- Parâmetros opcionais
+- Sobre parâmetros opcionais
+- Ativando strictNullChecks
+- Para saber mais: strictNullChecks, exemplo 1
+- Para saber mais: strictNullChecks, exemplo 2
+- Para saber mais: o tipo never
+- Trabalhando com Enuns
+- Sobre o valor da enum
+- Para saber mais: um detalhe importante sobre enum
+- Revisão
+- Consolidando seus conhecimentos
+
+**[3 - O poder dos decorators](./anotacoes/parte2_aula3.md)**
+
+- Requisitos não funcionais
+- Decorator de método
+- Esboço de um decorator de método
+- TypeScript e Decorators
+- Sobre o descriptor
+- Medindo o tempo de execução de métodos
+- Criando nosso próprio DOM Injector e Lazy loading
+- Para saber mais: decorator de classe
+- Revisão
+- Consolidando seus conhecimentos
+
+**[4 - API externa e interface](./anotacoes/parte2_aula4.md)**
+
+- API externa
+- Consumindo API externa
+- Definindo uma interface para a API
+- API externa
+- Revisando decorators
+- Sobre decorators
+- Isolando o acesso à API em um serviço
+- Interface de função
+- Sobre interface de funções
+- Revisão
+- Consolidando seus conhecimentos
+
+**[5 - Mais sobre interfaces](./anotacoes/parte2_aula5.md)**
+
+- Chega de múltiplos console.log
+- Polimorfismo
+- Interface de método
+- Interface em ação
+- Evitando importar negociações duplicadas
+- Estendendo interfaces
+- Sabatina
+- Sintaxe inválida
+- Para saber mais: TypeScript e Node.js
+- Union Types e Type Guards
+- Type alias
+- Revisão
+- Mensagens de alto nível
+- Async/await
+- Consolidando seus conhecimentos
+- Considerações finais
+- Projeto final completo
+
