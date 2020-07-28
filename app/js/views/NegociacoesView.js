@@ -1,4 +1,5 @@
-class NegociacoesView extends View {
+import { View } from './View';
+export class NegociacoesView extends View {
     template(negociacoes) {
         const tbody = negociacoes.toArray().map(negociacao => `
         <tr>

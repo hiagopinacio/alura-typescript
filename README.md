@@ -64,7 +64,7 @@ O compilador do TypeScript precisa da plataforma Node.js instalada para poder fu
 **[1 -  NameSpace e módulos externos ](./anotacoes/parte2_aula1.md)**
 
 - Organização do código através de namespaces
-- De namespaces para ES2015 modules
+- ES2015 modules
 - O papel de um carregador de módulos
 - Servidor local
 - Organizando módulos em barris
