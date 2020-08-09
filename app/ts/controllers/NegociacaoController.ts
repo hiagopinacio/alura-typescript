@@ -1,7 +1,6 @@
-import { Negociacao } from "../models/Negociacao";
-import { Negociacoes } from "../models/Negociacoes";
-import { MensagemView } from "../views/MensagemView";
-import { NegociacoesView } from "../views/NegociacoesView";
+// app/ts/controllers/NegociacaoController.ts
+import { Negociacao, Negociacoes } from "../models/index";
+import { MensagemView, NegociacoesView } from "../views/index";
 
 export class NegociacaoController {
 
@@ -30,3 +29,4 @@ export class NegociacaoController {
         console.log('negociacoes :>> ', this._negociacoes);
     }
 }
+
