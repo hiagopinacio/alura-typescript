@@ -181,28 +181,34 @@ return ([] as Negociacao[]).concat(this._negociacoes)
 ```
 
 ---
-## 2.4. Para saber mais: strictNullChecks, exemplo 1
+## 2.5. Para saber mais: strictNullChecks
 
+Podemos indicar que uma função pode devolver mais de um tipo, Por exemplo uma função que pode retornar boolean ou null:
 
+```ts
+// deixarmos explícitos que a função pode retornar boolean ou null
+function minhaFuncao(flag: boolean): boolean | null{
 
+    let valor = null;
+    if(flag) return null;
+    return true;
+}
 
+let x = minhaFuncao(false);
+```
 
-
----
-## 2.5. Para saber mais: strictNullChecks, exemplo 2
-
-
-
-
-
+Agora, como explicitamos que seu retorno pode ser também `null`, nosso código passará pelo `strictNullChecks`. Curiosamente, linguagens como a Golang permitem uma função ou método ter mais de um tipo de retorno.
 
 ---
 ## 2.6. Para saber mais: o tipo never
 
+TypeScript possui um tipo curioso, o tipo `never`. Este tipo é aplicável à métodos ou funções que por algum motivo, planejado ou não, podem não terminar sua execução de seu bloco.
 
+Exemplos clássicos são os de métodos que caem em um loop infinito ou de métodos que sempre retornam exceções. Exceções fazem com que o método não execute até o fim.
 
+Não confundir o tipo `never` com o tipo `void`. O segundo, apesar de indicar que a função ou método nada retorna, indica que a função ou método executará até o fim, mesmo que não retorne nada.
 
-
+Geralmente não usamos esse tipo em nosso código, mas ele pode aparecer como aviso do compilador. Quando aparecer, você já saberá que a execução do seu método nunca chegará até o fim, sendo um forte indicativo de um bug em seu código.
 
 ---
 ## 2.7. Trabalhando com Enuns

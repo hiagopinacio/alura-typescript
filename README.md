@@ -74,8 +74,7 @@ O compilador do TypeScript precisa da plataforma Node.js instalada para poder fu
 - Propriedades readonly
 - Parâmetros opcionais
 - Ativando strictNullChecks
-- Para saber mais: strictNullChecks, exemplo 1
-- Para saber mais: strictNullChecks, exemplo 2
+- Para saber mais: strictNullChecks
 - Para saber mais: o tipo never
 - Trabalhando com Enuns
 - Para saber mais: um detalhe importante sobre enum
