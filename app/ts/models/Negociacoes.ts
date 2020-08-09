@@ -1,3 +1,5 @@
+// app/ts/models/Negociacoes.ts
+
 import { Negociacao } from './Negociacao'
 
 export class Negociacoes {
@@ -11,6 +13,6 @@ export class Negociacoes {
 
     toArray(): Negociacao[] {
 
-        return [].concat(this._negociacoes)
+        return ([] as Negociacao[]).concat(this._negociacoes)
     }
 }

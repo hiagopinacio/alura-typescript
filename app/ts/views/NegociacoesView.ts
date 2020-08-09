@@ -31,7 +31,10 @@ export class NegociacoesView extends View<Negociacoes> {
 
             <tfoot >
             </tfoot>
-        </table>               
+        </table>
+        <script>
+            alert("oi, me remova passando escapa = true no construtor da view")
+        </script>               
         `
     }
 }

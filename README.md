@@ -72,18 +72,13 @@ O compilador do TypeScript precisa da plataforma Node.js instalada para poder fu
 **[2 - Lapidando nosso código](./anotacoes/parte2_aula2.md)**
 
 - Propriedades readonly
-- Sobre design de classe
 - Parâmetros opcionais
-- Sobre parâmetros opcionais
 - Ativando strictNullChecks
 - Para saber mais: strictNullChecks, exemplo 1
 - Para saber mais: strictNullChecks, exemplo 2
 - Para saber mais: o tipo never
 - Trabalhando com Enuns
-- Sobre o valor da enum
 - Para saber mais: um detalhe importante sobre enum
-- Revisão
-- Consolidando seus conhecimentos
 
 **[3 - O poder dos decorators](./anotacoes/parte2_aula3.md)**
 

@@ -8,7 +8,7 @@ export class NegociacaoController {
     private _inputQuantidade = $('#quantidade')
     private _inputValor = $('#valor')
     private _negociacoes = new Negociacoes()
-    private _negociacoesView = new NegociacoesView("#tabela-negociacoes")
+    private _negociacoesView = new NegociacoesView("#tabela-negociacoes", true)
     private _mensagemView = new MensagemView('#mensagemView')
 
     adiciona(event: Event) {

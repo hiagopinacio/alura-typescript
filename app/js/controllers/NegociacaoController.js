@@ -18,7 +18,7 @@ System.register(["../models/index", "../views/index"], function (exports_1, cont
                     this._inputQuantidade = $('#quantidade');
                     this._inputValor = $('#valor');
                     this._negociacoes = new index_1.Negociacoes();
-                    this._negociacoesView = new index_2.NegociacoesView("#tabela-negociacoes");
+                    this._negociacoesView = new index_2.NegociacoesView("#tabela-negociacoes", true);
                     this._mensagemView = new index_2.MensagemView('#mensagemView');
                 }
                 adiciona(event) {
