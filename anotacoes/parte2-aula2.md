@@ -314,7 +314,39 @@ enum DiaDaSemana {
 ## 2.8. Para saber mais: um detalhe importante sobre enum
 
 
+Vejamos o seguinte exemplo de enum:
 
+```ts
+enum Tipo {
+
+    ESPECIAL,
+    PADRAO
+}
+```
+
+Sabemos que o valor de `Tipo.ESPECIAL` e `Tipo.PADRAO` serão 0 e 1 respectivamente.
+
+Agora, em nosso código fazemos:
+
+```ts
+let tipo: Tipo = Tipo.ESPECIAL;
+```
+
+É uma sintaxe totalmente válida. E agora?
+
+```ts
+let tipo: Tipo = 4;
+```
+
+O código anterior compila? Compila! Se você vem de outra linguagem como Java ou C#, este código não compilaria, porque só poderíamos utilizar os tipos `Tipo.ESPECIAL` e `Tipo.PADRAO`.
+
+A questão é que a `enum` tem como subtipo `number`, por isso pode receber qualquer outro número que não esteja dentro do escopo da Enum.
+
+Há até uma issue sobre esta situação
+
+https://github.com/Microsoft/TypeScript/issues/11772
+
+Não é bem um erro, mas um comportamento esperado de como o TypeScript lida com Enum.
 
 
 
