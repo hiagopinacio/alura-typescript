@@ -15,18 +15,38 @@ export class NegociacaoController {
 
         event.preventDefault()
 
-        const negociacao = new Negociacao(
-            new Date(this._inputData.val().replace("/-/g", ",")),
-            parseInt(this._inputQuantidade.val()),
-            parseFloat(this._inputValor.val())
-        )
+        let data = new Date(this._inputData.val().replace("/-/g", ","))
 
-        this._negociacoes.adiciona(negociacao)
+        if (this._ehDiaUtil(data)) {
 
-        this._negociacoesView.update(this._negociacoes)
-        this._mensagemView.update("Negociação adicionada com sucesso!")
+            const negociacao = new Negociacao(
+                data,
+                parseInt(this._inputQuantidade.val()),
+                parseFloat(this._inputValor.val())
+            )
 
-        console.log('negociacoes :>> ', this._negociacoes);
+            this._negociacoes.adiciona(negociacao)
+
+            this._negociacoesView.update(this._negociacoes)
+            this._mensagemView.update("Negociação adicionada com sucesso!")
+
+        } else {
+            this._mensagemView.update("ERRO: Negociações são permitidas apenas em dia útil!")
+
+        }
+    }
+
+    private _ehDiaUtil(data: Date) {
+        return data.getUTCDay() != DiaDaSemana.Sabado && data.getUTCDay() != DiaDaSemana.Domingo;
     }
 }
 
+enum DiaDaSemana {
+    Domingo,
+    Segunda,
+    Terca,
+    Quarta,
+    Quinta,
+    Sexta,
+    Sabado
+}

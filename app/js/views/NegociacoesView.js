@@ -38,7 +38,7 @@ System.register(["./View"], function (exports_1, context_1) {
             </tfoot>
         </table>
         <script>
-            alert("oi")
+            alert("oi, me remova passando escapa = true no construtor da view")
         </script>               
         `;
                 }

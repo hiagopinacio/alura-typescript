@@ -213,10 +213,102 @@ Geralmente não usamos esse tipo em nosso código, mas ele pode aparecer como av
 ---
 ## 2.7. Trabalhando com Enuns
 
+Enumeratons permite definir valores numéricos para nomes de parâmetros de uma forma elegante.
+O type Script possui o `enum` para este propósito.
+
+Por exemplo, o enum abaixo define valores numéricos para os dias da semana:
+
+```ts
+enum DiaDaSemana {
+    Domingo,
+    Segunda,
+    Terca,
+    Quarta, 
+    Quinta, 
+    Sexta, 
+    Sabado, 
+}
+```
+Por padrão, o valor de cada um começa de 0, e cada parametro a seguir é o valor do anterior mais um.
+
+Poderíamos definir `Domingo =1`, desta forma, `Segunda` teria o valor 2 sem a necessidade de explicita-lo.
+
+Vamos utilizar o `enum` do tipeScript para permitir negociações apenas em dias úteis.
+
+O método `date.getDay()`, sendo `date` uma instância de `Date`, retorna um valor de 0 a 6 que representa o dia da semana, sendo 0 para domingo e indo a té 6 para sábado.
+
+Com o método `getDay()` e com o `enum DiaDaSemana` exemplificado acima, podemos criar a função `_ehDiaUtil` que recebera uma instância de `Date` e retornará verdadeiro se a data está entre segunda e sexta-feira:
+
+```ts
+_ehDiaUtil(data: Date) {
+
+    return data.getDay() != DiaDaSemana.Sabado && data.getDay() != DiaDaSemana.Domingo;
+}
 
 
+enum DiaDaSemana {
 
+    Domingo, 
+    Segunda, 
+    Terca, 
+    Quarta, 
+    Quinta, 
+    Sexta, 
+    Sabado
+}
+```
 
+Podemos utilizar esta função no controller `NegociacaoController` para adicionarmos negociações em dias uteis, ou retornar uma mensagem de erro caso contrário.:
+
+```ts
+// app/ts/controllers/NegociacaoController.ts
+
+// código omitido
+
+export class NegociacaoController {
+
+    // código omitido
+
+    adiciona(event: Event) {
+
+        event.preventDefault()
+
+        let data = new Date(this._inputData.val().replace("/-/g", ","))
+
+        if (this._ehDiaUtil(data)) {
+
+            const negociacao = new Negociacao(
+                data,
+                parseInt(this._inputQuantidade.val()),
+                parseFloat(this._inputValor.val())
+            )
+
+            this._negociacoes.adiciona(negociacao)
+
+            this._negociacoesView.update(this._negociacoes)
+            this._mensagemView.update("Negociação adicionada com sucesso!")
+
+        } else {
+            this._mensagemView.update("ERRO: Negociações são permitidas apenas em dia útil!")
+
+        }
+    }
+
+    private _ehDiaUtil(data: Date) {
+        return data.getUTCDay() != DiaDaSemana.Sabado && data.getUTCDay() != DiaDaSemana.Domingo;
+    }
+}
+
+enum DiaDaSemana {
+    Domingo,
+    Segunda,
+    Terca,
+    Quarta,
+    Quinta,
+    Sexta,
+    Sabado
+}
+```
 
 ---
 ## 2.8. Para saber mais: um detalhe importante sobre enum
