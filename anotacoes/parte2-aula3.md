@@ -134,7 +134,7 @@ Usamos decorator através de um `@`, seguido do nome do decorator, abrindo e fec
 Recarregando nossa aplicação tudo continua funcionando. Agora precisamos escrever a lógica do teste de performance em nosso decorator.
 
 ---
-## 3. Medindo o tempo de execução de métodos
+## 3.3 Medindo o tempo de execução de métodos
 
 Agora, só precisamos guardar o tempo antes da chamada do método original e logo depois da sua chamada, para no fim, realizarmos o cálculo do tempo gasto. Inclusive, vamos exibir no console os parâmetros recebidos pelo método, inclusive seu retorno:
 
@@ -202,19 +202,97 @@ export function logarTempoDeExecucao(emSegundos: boolean = false) {
 ```
 
 ---
-## 3. Criando nosso próprio DOM Injector e Lazy loading
+## 3.4 Criando nosso próprio DOM Injector e Lazy loading
 
+O construtor `NegociaçãoController` busca os elementos no DOM mesmo que os usuários não interajam com eles.
+
+Podemos melhorar isso com auxílio de um decorator, criando uma estratégia de *lazy loading*. Por debaixo dos panos, vamos substituir cada propriedade por um getter. Sendo um getter, podemos escrever um bloco de código que ainda assim para o JavaScript ele será considerado uma propriedade. Nesse bloco de código, só buscaremos o elemento do DOM quando o getter for acessado pela primeira vez. Novos acessos retornarão o mesmo elemento!
+
+```ts
+// app/ts/helpers/decorators/domInject.ts 
+
+export function domInject(seletor: string) {
+
+    return function(target: any, key: string) {
+
+        let elemento: JQuery;
+
+        const getter = function() {
+
+            if(!elemento) {
+                console.log(`buscando  ${seletor} para injetar em ${key}`);
+                elemento = $(seletor);
+            }
+
+            return elemento;
+        }
+    }
+}
+
+```
+
+Criamos uma função que será nosso getter, mas como faremos a substituição da propriedade alvo do decorator pelo getter que criamos? Faremos isso com auxílio de Object.defineProperty:
+
+```ts
+// app/ts/helpers/decorators/domInject.ts 
+
+export function domInject(seletor: string) {
+
+    return function(target: any, key: string) {
+
+        let elemento: JQuery;
+
+        const getter = function() {
+
+            if(!elemento) {
+                console.log(`buscando  ${seletor} para injetar em ${key}`);
+                elemento = $(seletor);
+            }
+
+            return elemento;
+        }
+
+        Object.defineProperty(target, key, {
+           get: getter
+       });
+    }
+}
+```
+
+Não podemos nos esquecer de exportar o decorator através de `app/ts/helpers/decorators/index.ts`.
+
+Por fim, vamos importá-lo em NegociacaoController e utilizá-los nas propriedades da classe, não esquecendo de remover a busca manual dos elementos do seu constructor:
+
+```ts
+import { NegociacoesView, MensagemView } from '../views/index';
+import { Negociacoes, Negociacao } from '../models/index';
+import { domInject } from '../helpers/decorators/index';
+
+export class NegociacaoController {
+
+    @domInject('#data')
+    private _inputData: JQuery;
+
+    @domInject('#quantidade')
+    private _inputQuantidade: JQuery;
+
+    @domInject('#valor')
+    private _inputValor: JQuery;
+
+    private _negociacoes = new Negociacoes();
+    private _negociacoesView = new NegociacoesView('#negociacoesView');
+    private _mensagemView = new MensagemView('#mensagemView');
+
+    constructor() {
+       // removeu a busca manual dos elementos
+        this._negociacoesView.update(this._negociacoes);
+    }
+// código posterior omitido
+```
+
+Assim, criamos um decorator que realiza injeção de elementos do DOM com o padrão lazy loading.
 
 ---
-## 3. Para saber mais: decorator de classe
+## 3.5 Para saber mais: decorator de classe
 
 
----
-## 3. Revisão
-
-
----
-## 3. Consolidando seus conhecimentos
-
-
----

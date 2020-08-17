@@ -83,14 +83,9 @@ O compilador do TypeScript precisa da plataforma Node.js instalada para poder fu
 
 - Requisitos não funcionais
 - Decorator de método
-- Esboço de um decorator de método
-- TypeScript e Decorators
-- Sobre o descriptor
 - Medindo o tempo de execução de métodos
 - Criando nosso próprio DOM Injector e Lazy loading
 - Para saber mais: decorator de classe
-- Revisão
-- Consolidando seus conhecimentos
 
 **[4 - API externa e interface](./anotacoes/parte2_aula4.md)**
 

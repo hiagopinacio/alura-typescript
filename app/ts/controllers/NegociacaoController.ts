@@ -1,12 +1,16 @@
 // app/ts/controllers/NegociacaoController.ts
 import { Negociacao, Negociacoes } from "../models/index";
 import { MensagemView, NegociacoesView } from "../views/index";
+import { domInject } from "../helpers/decorators/index";
 
 export class NegociacaoController {
 
-    private _inputData = $('#data')
-    private _inputQuantidade = $('#quantidade')
-    private _inputValor = $('#valor')
+    @domInject('#data')
+    private _inputData: JQuery
+    @domInject('#quantidade')
+    private _inputQuantidade: JQuery
+    @domInject('#valor')
+    private _inputValor: JQuery
     private _negociacoes = new Negociacoes()
     private _negociacoesView = new NegociacoesView("#tabela-negociacoes", true)
     private _mensagemView = new MensagemView('#mensagemView')
