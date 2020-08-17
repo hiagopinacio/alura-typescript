@@ -9,7 +9,7 @@ export abstract class View<T> {
         this._element = $(selector)
     }
 
-    @logarTempoDeExecucao()
+    @logarTempoDeExecucao(true)
     update(model: T) {
         let template = this.template(model)
         if (this.escapa) {

@@ -43,8 +43,6 @@ Podemos utilizar decorators para alterar o comportamento de métodos, por exempl
 }
 ```
 
-### 3.2.1 - Criando o Decorator
-
 Vamos criar o arquivo `app/ts/helpers/decorators/logarTempoDeExecucao.ts` e nele exportamos uma função de mesmo nome:
 
 ```ts
@@ -136,20 +134,72 @@ Usamos decorator através de um `@`, seguido do nome do decorator, abrindo e fec
 Recarregando nossa aplicação tudo continua funcionando. Agora precisamos escrever a lógica do teste de performance em nosso decorator.
 
 ---
-## 3. Esboço de um decorator de método
-
-
----
-## 3. TypeScript e Decorators
-
-
----
-## 3. Sobre o descriptor
-
-
----
 ## 3. Medindo o tempo de execução de métodos
 
+Agora, só precisamos guardar o tempo antes da chamada do método original e logo depois da sua chamada, para no fim, realizarmos o cálculo do tempo gasto. Inclusive, vamos exibir no console os parâmetros recebidos pelo método, inclusive seu retorno:
+
+```ts
+export function logarTempoDeExecucao() {
+
+    return function(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+
+            const metodoOriginal = descriptor.value;
+
+            descriptor.value = function(...args: any[]) {
+                console.log('-----------------------')
+                console.log(`Parâmetros do método ${propertyKey}: ${JSON.stringify(args)}`);
+                const t1 = performance.now();
+                const resultado = metodoOriginal.apply(this, args);
+                console.log(`Resultado do método: ${JSON.stringify(resultado)}` )
+                const t2 = performance.now();
+                console.log(`${propertyKey} demorou ${t2 - t1} ms`);
+                console.log('-----------------------')
+                return resultado;
+            }
+            return descriptor;
+    }
+
+}
+
+```
+
+como `args` é um array, devemos usar `JSON.stringify(args)` para exibilo como texto no console.
+
+### Passando parametro para decorators
+
+Podemos passar parametros para os decorators.
+Para exemplificar, vamos passar um parâmetro booleano que permite exibir o tempo de execução em segundos:
+
+```ts
+export function logarTempoDeExecucao(emSegundos: boolean = false) {
+
+    return function(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+
+            const metodoOriginal = descriptor.value;
+
+            descriptor.value = function(...args: any[]) {
+
+                let divisor = 1;
+                let unidade = 'milisegundos'
+                if(emSegundos) {
+                    divisor = 1000;
+                    unidade = 'segundos';
+                }
+
+                console.log('-----------------------')
+                console.log(`Parâmetros do método ${propertyKey}: ${JSON.stringify(args)}`);
+                const t1 = performance.now();
+                const resultado = metodoOriginal.apply(this, args);
+                console.log(`Resultado do método: ${JSON.stringify(resultado)}` )
+                const t2 = performance.now();
+                console.log(`${propertyKey} demorou ${(t2 - t1)/divisor} ${unidade}`);
+                console.log('-----------------------')
+                return resultado;
+            }
+            return descriptor;
+    }
+}
+```
 
 ---
 ## 3. Criando nosso próprio DOM Injector e Lazy loading
