@@ -43,6 +43,28 @@ System.register(["../models/index", "../views/index", "../helpers/decorators/ind
                 _ehDiaUtil(data) {
                     return data.getUTCDay() != DiaDaSemana.Sabado && data.getUTCDay() != DiaDaSemana.Domingo;
                 }
+                importarDados() {
+                    function isOk(res) {
+                        if (res.ok) {
+                            return res;
+                        }
+                        else {
+                            throw new Error(res.statusText);
+                        }
+                    }
+                    fetch("http://localhost:8080/dados")
+                        .then(res => isOk(res))
+                        .then(res => res.json())
+                        .then((dados) => {
+                        dados.map(dado => new index_1.Negociacao(new Date(), dado.montante, dado.vezes)).forEach(negociacao => this._negociacoes.adiciona(negociacao));
+                        this._negociacoesView.update(this._negociacoes);
+                        this._mensagemView.update("Importação realizada com sucesso.");
+                    })
+                        .catch(err => {
+                        console.log(err.message);
+                        this._mensagemView.update("Erro ao realizar importações.");
+                    });
+                }
             };
             __decorate([
                 index_3.domInject('#data')

@@ -90,9 +90,8 @@ O compilador do TypeScript precisa da plataforma Node.js instalada para poder fu
 **[4 - API externa e interface](./anotacoes/parte2_aula4.md)**
 
 - API externa
-- Consumindo API externa
 - Definindo uma interface para a API
-- API externa
+- Consumindo API externa
 - Revisando decorators
 - Sobre decorators
 - Isolando o acesso à API em um serviço

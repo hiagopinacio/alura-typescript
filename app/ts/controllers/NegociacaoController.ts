@@ -1,5 +1,5 @@
 // app/ts/controllers/NegociacaoController.ts
-import { Negociacao, Negociacoes } from "../models/index";
+import { Negociacao, Negociacoes, NegociacaoParcial } from "../models/index";
 import { MensagemView, NegociacoesView } from "../views/index";
 import { domInject } from "../helpers/decorators/index";
 
@@ -43,6 +43,35 @@ export class NegociacaoController {
     private _ehDiaUtil(data: Date) {
         return data.getUTCDay() != DiaDaSemana.Sabado && data.getUTCDay() != DiaDaSemana.Domingo;
     }
+
+    importarDados() {
+        function isOk(res: Response) {
+            if (res.ok) {
+                return res
+            } else {
+                throw new Error(res.statusText);
+
+            }
+        }
+
+        fetch("http://localhost:8080/dados")
+            .then(res => isOk(res))
+            .then(res => res.json())
+            .then((dados: NegociacaoParcial[]) => {
+                dados.map(
+                    dado => new Negociacao(new Date(), dado.montante, dado.vezes)
+                ).forEach(
+                    negociacao => this._negociacoes.adiciona(negociacao)
+                )
+                this._negociacoesView.update(this._negociacoes)
+                this._mensagemView.update("Importação realizada com sucesso.")
+            })
+            .catch(err => {
+                console.log(err.message)
+                this._mensagemView.update("Erro ao realizar importações.")
+            });
+    }
+
 }
 
 enum DiaDaSemana {
