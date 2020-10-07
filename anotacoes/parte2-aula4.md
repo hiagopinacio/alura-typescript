@@ -99,13 +99,59 @@ Na função `importaDados` de `NegociacaoController`:
             .catch(err => console.log(err.message));       
     }
    ```
----
-## 4.1 - API externa
-
 
 ---
-## 4.1 - Revisando decorators
+## 4.4 - Revisando decorators
 
+Vamos criar um decorator para postergar a execução de uma requisição e impedir que ela seja executada sequencialmente se o botao for clicado repetidas vezes.
+
+
+```ts
+// app/ts/helpers/decorators/debounce.ts
+
+export function debounce(milissegundos = 500) {
+
+    return function(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+
+        const metodoOriginal = descriptor.value;
+
+        let timer = 0;
+
+        descriptor.value = function(...args: any[]) {
+            if(event) event.preventDefault();
+            clearInterval(timer);
+            timer = setTimeout(() => metodoOriginal.apply(this, args), milissegundos);
+        }
+
+        return descriptor;
+    }
+}
+
+```
+
+a linha `if(event) event.preventDefault();` é necessária para utilizarmos o decorator em botoes de submit de formulários, pois como o decorator posterga a execução do código, a página iria recarregar. Também é necessário remover event como entrada no método original, assim, obteremos ele de maneira implícita:
+
+```ts
+//...
+
+import {debounce } from "../helpers/decorators/index";
+//...
+
+export class NegociacaoController {
+
+//...
+
+    @debounce(500)
+    adiciona() {
+
+        //...
+
+    }
+
+    //..
+```
+
+agora, ao clicar repetidamente em adicionar, ele só executará uma vez 500 ms após o ultimo clique.
 
 ---
 ## 4.1 - Sobre decorators

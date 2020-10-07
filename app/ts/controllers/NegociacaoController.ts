@@ -1,7 +1,7 @@
 // app/ts/controllers/NegociacaoController.ts
 import { Negociacao, Negociacoes, NegociacaoParcial } from "../models/index";
 import { MensagemView, NegociacoesView } from "../views/index";
-import { domInject } from "../helpers/decorators/index";
+import { domInject, debounce } from "../helpers/decorators/index";
 
 export class NegociacaoController {
 
@@ -15,9 +15,10 @@ export class NegociacaoController {
     private _negociacoesView = new NegociacoesView("#tabela-negociacoes", true)
     private _mensagemView = new MensagemView('#mensagemView')
 
-    adiciona(event: Event) {
+    @debounce(500)
+    adiciona() {
 
-        event.preventDefault()
+        
 
         let data = new Date(this._inputData.val().replace("/-/g", ","))
 
@@ -44,6 +45,7 @@ export class NegociacaoController {
         return data.getUTCDay() != DiaDaSemana.Sabado && data.getUTCDay() != DiaDaSemana.Domingo;
     }
 
+    @debounce(500)
     importarDados() {
         function isOk(res: Response) {
             if (res.ok) {
