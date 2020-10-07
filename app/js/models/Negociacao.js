@@ -17,6 +17,13 @@ System.register([], function (exports_1, context_1) {
                 get reprData() {
                     return [this.data.getUTCDate(), this.data.getUTCMonth() + 1, this.data.getUTCFullYear()].join('/');
                 }
+                paraTexto() {
+                    console.log('-- paraTexto --');
+                    console.log(`Data: ${this.data}
+            Quantidade: ${this.quantidade}, 
+            Valor: ${this.valor}, 
+            Volume: ${this.volume}`);
+                }
             };
             exports_1("Negociacao", Negociacao);
         }
