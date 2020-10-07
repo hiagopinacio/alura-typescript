@@ -231,11 +231,47 @@ export class NegociacaoController {
 ```
 
 ---
-## 4.1 - Isolando o acesso à API em um serviço
+## 4.6 - Interface de função
 
+O método `importaNegociacoes` de NegociacaoService aceita receber uma função. No entanto, podemos passar qualquer função, o que pode resultar em erro.
 
----
-## 4.1 - Interface de função
+Vamos criar uma interface de função para definir os tipos de entrada e saida desta função:
+
+```ts
+// app/ts/services/NegociacaoService.ts
+
+import { NegociacaoParcial, Negociacao } from '../models/index';
+
+export class NegociacaoService {
+
+    obterNegociacoes(handler: ResponseHandler): Promise<Negociacao[]> {
+
+        return fetch('http://localhost:8080/dados')
+            .then(res => handler(res))
+            .then(res => res.json())
+            .then((dados: NegociacaoParcial[]) => 
+                dados.map(dado => new Negociacao(new Date(), dado.vezes, dado.montante))
+            )
+
+    }
+}
+
+export interface ResponseHandler {
+
+    (res: Response): Response
+}
+```
+A interface `ResponseHandler` é o tipo que define que a função deve receber um parâmetro do tipo `Response` e devolver um `Response`. Inclusive, lá no método `obterNegociacoes` mudamos o tipo de Function para `ResponseHandler`.
+
+Agora, em `NegociacaoController`, nosso código não compila se passarmos uma função indevida e somos alertados disso através do compilador do TypeScript.
+
+Podemos até declarar o tipo da função isOk se quisermos:
+```ts
+    const isOk: ResponseHandler = (res: Response) => {
+        if(res.ok) return res;
+        throw new Error(res.statusText);
+    }
+```
 
 
 ---

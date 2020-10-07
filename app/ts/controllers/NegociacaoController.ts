@@ -1,8 +1,21 @@
 // app/ts/controllers/NegociacaoController.ts
-import { Negociacao, Negociacoes, NegociacaoParcial } from "../models/index";
-import { MensagemView, NegociacoesView } from "../views/index";
-import { domInject, debounce } from "../helpers/decorators/index";
-import { NegociacaoService } from "../services/index";
+import {
+    Negociacao,
+    Negociacoes,
+    NegociacaoParcial
+} from "../models/index";
+import {
+    MensagemView,
+    NegociacoesView
+} from "../views/index";
+import {
+    domInject,
+    debounce
+} from "../helpers/decorators/index";
+import {
+    NegociacaoService,
+    ResponseHandler
+} from "../services/index";
 
 export class NegociacaoController {
 
@@ -15,12 +28,12 @@ export class NegociacaoController {
     private _negociacoes = new Negociacoes()
     private _negociacoesView = new NegociacoesView("#tabela-negociacoes", true)
     private _mensagemView = new MensagemView('#mensagemView')
-    private _negociacaoService = new NegociacaoService
+    private _negociacaoService = new NegociacaoService()
 
     @debounce(500)
     adiciona() {
 
-        
+
 
         let data = new Date(this._inputData.val().replace("/-/g", ","))
 
@@ -49,18 +62,17 @@ export class NegociacaoController {
 
     @debounce(500)
     importarDados() {
-        function isOk(res: Response) {
-            if (res.ok) {
-                return res
-            } else {
-                throw new Error(res.statusText);
 
-            }
+        const isOk: ResponseHandler = (res: Response) => {
+            if (res.ok) return res
+            throw new Error(res.statusText);
         }
 
         this._negociacaoService.obterNegociacoes(isOk)
             .then(negociacoes => {
-                negociacoes.forEach(negociacao => this._negociacoes.adiciona(negociacao))
+                negociacoes.forEach(negociacao =>
+                    this._negociacoes.adiciona(negociacao));
+                this._negociacoesView.update(this._negociacoes);
             })
             .catch(err => {
                 console.log(err.message)

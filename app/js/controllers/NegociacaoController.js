@@ -29,7 +29,7 @@ System.register(["../models/index", "../views/index", "../helpers/decorators/ind
                     this._negociacoes = new index_1.Negociacoes();
                     this._negociacoesView = new index_2.NegociacoesView("#tabela-negociacoes", true);
                     this._mensagemView = new index_2.MensagemView('#mensagemView');
-                    this._negociacaoService = new index_4.NegociacaoService;
+                    this._negociacaoService = new index_4.NegociacaoService();
                 }
                 adiciona() {
                     let data = new Date(this._inputData.val().replace("/-/g", ","));
@@ -47,17 +47,15 @@ System.register(["../models/index", "../views/index", "../helpers/decorators/ind
                     return data.getUTCDay() != DiaDaSemana.Sabado && data.getUTCDay() != DiaDaSemana.Domingo;
                 }
                 importarDados() {
-                    function isOk(res) {
-                        if (res.ok) {
+                    const isOk = (res) => {
+                        if (res.ok)
                             return res;
-                        }
-                        else {
-                            throw new Error(res.statusText);
-                        }
-                    }
+                        throw new Error(res.statusText);
+                    };
                     this._negociacaoService.obterNegociacoes(isOk)
                         .then(negociacoes => {
                         negociacoes.forEach(negociacao => this._negociacoes.adiciona(negociacao));
+                        this._negociacoesView.update(this._negociacoes);
                     })
                         .catch(err => {
                         console.log(err.message);
