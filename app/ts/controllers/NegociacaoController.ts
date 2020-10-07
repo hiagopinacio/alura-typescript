@@ -2,6 +2,7 @@
 import { Negociacao, Negociacoes, NegociacaoParcial } from "../models/index";
 import { MensagemView, NegociacoesView } from "../views/index";
 import { domInject, debounce } from "../helpers/decorators/index";
+import { NegociacaoService } from "../services/index";
 
 export class NegociacaoController {
 
@@ -14,6 +15,7 @@ export class NegociacaoController {
     private _negociacoes = new Negociacoes()
     private _negociacoesView = new NegociacoesView("#tabela-negociacoes", true)
     private _mensagemView = new MensagemView('#mensagemView')
+    private _negociacaoService = new NegociacaoService
 
     @debounce(500)
     adiciona() {
@@ -56,17 +58,9 @@ export class NegociacaoController {
             }
         }
 
-        fetch("http://localhost:8080/dados")
-            .then(res => isOk(res))
-            .then(res => res.json())
-            .then((dados: NegociacaoParcial[]) => {
-                dados.map(
-                    dado => new Negociacao(new Date(), dado.montante, dado.vezes)
-                ).forEach(
-                    negociacao => this._negociacoes.adiciona(negociacao)
-                )
-                this._negociacoesView.update(this._negociacoes)
-                this._mensagemView.update("Importação realizada com sucesso.")
+        this._negociacaoService.obterNegociacoes(isOk)
+            .then(negociacoes => {
+                negociacoes.forEach(negociacao => this._negociacoes.adiciona(negociacao))
             })
             .catch(err => {
                 console.log(err.message)

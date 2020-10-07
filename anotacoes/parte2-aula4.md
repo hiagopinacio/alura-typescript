@@ -153,9 +153,82 @@ export class NegociacaoController {
 
 agora, ao clicar repetidamente em adicionar, ele só executará uma vez 500 ms após o ultimo clique.
 
----
-## 4.1 - Sobre decorators
 
+---
+## 4.5 - Isolando o acesso à API em um serviço
+
+A lógica de acesso à nossa API esta fixa no método `importaDados` de `NegociacaoController`. O problema dessa abordagem é que se quisermos acessar a API em outro controller, teremos que repetir código. Podemos enviar isso isolando a lógica de importação na classe `NegociacaoService`.
+
+```ts
+// app/ts/services/NegociacaoService.ts
+
+import { NegociacaoParcial, Negociacao } from '../models/index';
+
+export class NegociacaoService {
+
+    obterNegociacoes(handler: Function): Promise<Negociacao[]> {
+
+        return fetch('http://localhost:8080/dados')
+            .then(res => handler(res))
+            .then(res => res.json())
+            .then((dados: NegociacaoParcial[]) => 
+                dados.map(dado => new Negociacao(new Date(), dado.vezes, dado.montante))
+            )
+
+    }
+}
+
+```
+Um ponto a destacar é que nosso método recebe uma `handler`, isto é, a função que considerará ou não a operação válida.
+
+O retorno do método será a `Promise`, resultado de `fetch`. No entanto, `Promise` é um tipo genérico e precisamos indicar qual tipo estará disponível ao acessarmos seu retornado através de `then`. É por isso que usamos `Promise<Negociacao[]>`, pois através de then teremos acesso ao array de negociações.
+
+Como de costume, vamos criar um barrel para facilitar a importação do serviço:
+
+```ts
+// app/ts/services/index.ts 
+export * from './NegociacaoService';
+```
+
+Agora, vamos importar nosso serviço, inclusive adicionar como propriedade de NegociacaoController uma instância dessa classe para que possamos utilizá-la:
+
+```ts
+import { NegociacoesView, MensagemView } from '../views/index';
+import { Negociacao, Negociacoes } from '../models/index';
+import { domInject, throttle } from '../helpers/decorators/index';
+import { NegociacaoParcial } from '../models/index';
+import { NegociacaoService } from '../services/index';
+
+export class NegociacaoController {
+
+    // código anterior omitido
+
+   // mais uma propriedade da classe!
+    private _service = new NegociacaoService();
+
+// código anterior omitido 
+
+    @throttle()
+    importaDados() {
+
+        function isOk(res: Response) {
+
+            if(res.ok) {
+                return res;
+            } else {
+                throw new Error(res.statusText);
+            }
+        }
+
+        this._service
+            .obterNegociacoes(isOk)
+            .then(negociacoes => {
+                negociacoes.forEach(negociacao => 
+                    this._negociacoes.adiciona(negociacao));
+                this._negociacoesView.update(this._negociacoes);
+            });       
+    }
+```
 
 ---
 ## 4.1 - Isolando o acesso à API em um serviço
