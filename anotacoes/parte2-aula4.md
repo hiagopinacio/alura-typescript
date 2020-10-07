@@ -272,18 +272,3 @@ Podemos até declarar o tipo da função isOk se quisermos:
         throw new Error(res.statusText);
     }
 ```
-
-
----
-## 4.1 - Sobre interface de funções
-
-
----
-## 4.1 - Revisão
-
-
----
-## 4.1 - Consolidando seus conhecimentos
-
-
----
