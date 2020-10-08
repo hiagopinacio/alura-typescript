@@ -16,7 +16,9 @@ import {
     NegociacaoService,
     ResponseHandler
 } from "../services/index";
-import { imprime } from "../helpers/index";
+import {
+    imprime
+} from "../helpers/index";
 
 export class NegociacaoController {
 
@@ -62,23 +64,32 @@ export class NegociacaoController {
     }
 
     @debounce(500)
-    importarDados() {
+    async importarDados() {
+
 
         const isOk: ResponseHandler = (res: Response) => {
             if (res.ok) return res
             throw new Error(res.statusText);
         }
 
-        this._negociacaoService.obterNegociacoes(isOk)
-            .then(negociacoes => {
-                negociacoes.forEach(negociacao =>
-                    this._negociacoes.adiciona(negociacao));
-                this._negociacoesView.update(this._negociacoes);
-            })
-            .catch(err => {
-                console.log(err.message)
-                this._mensagemView.update("Erro ao realizar importações.")
-            });
+        try {
+            const negociacoesParaImportar = await this._negociacaoService.obterNegociacoes(isOk)
+
+
+            const negociacoesJaImportadas = this._negociacoes.toArray()
+
+            negociacoesParaImportar.filter(
+                negociacao => !negociacoesJaImportadas.some(
+                    jaImportada => negociacao.ehIgual(jaImportada)
+                )
+            ).forEach(negociacao =>
+                this._negociacoes.adiciona(negociacao));
+            this._negociacoesView.update(this._negociacoes);
+        } catch (error) {
+            console.log(error.message)
+            this._mensagemView.update("Erro ao realizar importações.")
+
+        }
     }
 
 }
