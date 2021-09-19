@@ -61,7 +61,7 @@ O compilador do TypeScript precisa da plataforma Node.js instalada para poder fu
 
 ## Parte2: Mais Técnicas e Boas Práticas
 
-**[1 -  NameSpace e módulos externos ](./anotacoes/parte2_aula1.md)**
+**[1 -  NameSpace e módulos externos ](./anotacoes/parte2-aula1.md)**
 
 - Organização do código através de namespaces
 - ES2015 modules
@@ -69,7 +69,7 @@ O compilador do TypeScript precisa da plataforma Node.js instalada para poder fu
 - Servidor local
 - Organizando módulos em barris
 
-**[2 - Lapidando nosso código](./anotacoes/parte2_aula2.md)**
+**[2 - Lapidando nosso código](./anotacoes/parte2-aula2.md)**
 
 - Propriedades readonly
 - Parâmetros opcionais
@@ -79,7 +79,7 @@ O compilador do TypeScript precisa da plataforma Node.js instalada para poder fu
 - Trabalhando com Enuns
 - Para saber mais: um detalhe importante sobre enum
 
-**[3 - O poder dos decorators](./anotacoes/parte2_aula3.md)**
+**[3 - O poder dos decorators](./anotacoes/parte2-aula3.md)**
 
 - Requisitos não funcionais
 - Decorator de método
@@ -87,7 +87,7 @@ O compilador do TypeScript precisa da plataforma Node.js instalada para poder fu
 - Criando nosso próprio DOM Injector e Lazy loading
 - Para saber mais: decorator de classe
 
-**[4 - API externa e interface](./anotacoes/parte2_aula4.md)**
+**[4 - API externa e interface](./anotacoes/parte2-aula4.md)**
 
 - API externa
 - Definindo uma interface para a API
@@ -100,7 +100,7 @@ O compilador do TypeScript precisa da plataforma Node.js instalada para poder fu
 - Revisão
 - Consolidando seus conhecimentos
 
-**[5 - Mais sobre interfaces](./anotacoes/parte2_aula5.md)**
+**[5 - Mais sobre interfaces](./anotacoes/parte2-aula5.md)**
 
 - Chega de múltiplos console.log
 - Polimorfismo
