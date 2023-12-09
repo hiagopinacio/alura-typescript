@@ -14,8 +14,8 @@ System.register(["../models/index", "../views/index", "../helpers/decorators/ind
             step((generator = generator.apply(thisArg, _arguments || [])).next());
         });
     };
-    var __moduleName = context_1 && context_1.id;
     var index_1, index_2, index_3, index_4, index_5, NegociacaoController, DiaDaSemana;
+    var __moduleName = context_1 && context_1.id;
     return {
         setters: [
             function (index_1_1) {
