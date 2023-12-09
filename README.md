@@ -1,3 +1,5 @@
+Published on: https://hiagopinacio.github.io/learn-typescript/app/index.html
+
 # Requisitos
 
 ## TypeScript
